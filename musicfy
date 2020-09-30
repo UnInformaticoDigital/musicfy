@@ -1,0 +1,127 @@
+# MUSICFY is a bash script that automates the installation of youtube-dl
+# and helps with downloading music, leting the user use the capabilities 
+# of youtube-dl without wasting any time on wondering about options or any
+# other stuff.
+clear
+
+banner () {
+
+	echo '
+     ▄▄▄▄███▄▄▄▄   ███    █▄     ▄████████  ▄█   ▄████████    ▄████████ ▄██   ▄
+   ▄██▀▀▀███▀▀▀██▄ ███    ███   ███    ███ ███  ███    ███   ███    ███ ███   ██▄
+   ███   ███   ███ ███    ███   ███    █▀  ███▌ ███    █▀    ███    █▀  ███▄▄▄███
+   ███   ███   ███ ███    ███   ███        ███▌ ███         ▄███▄▄▄     ▀▀▀▀▀▀███
+   ███   ███   ███ ███    ███ ▀███████████ ███▌ ███        ▀▀███▀▀▀     ▄██   ███
+   ███   ███   ███ ███    ███          ███ ███  ███    █▄    ███        ███   ███
+   ███   ███   ███ ███    ███    ▄█    ███ ███  ███    ███   ███        ███   ███
+    ▀█   ███   █▀  ████████▀   ▄████████▀  █▀   ████████▀    ███         ▀█████▀
+'
+}
+
+menu () {
+
+	echo "  ________________________________________________________________________________"
+	echo ""
+	echo "	 	 U I D 		U N I N F O R M A T I C O . D I G I T A L"
+	echo ""
+	echo "			Y O U T U B E - D L	A U T O M A T I O N	"	
+	echo "  _______________________________________________________________________________"
+	echo ""
+	echo "		1) INSTALL REQUIREMENTS"
+	echo ""
+	echo "		2) DOWNLOAD MUSIC"
+	echo ""
+	echo "		3) EXIT"
+	read ch
+	case $ch in
+		1)requirements;;
+		2)downloadMusic;;
+		3)exit 0;;
+		*) echo "INVALID OPTION"
+	esac
+
+
+}
+
+start() {
+	
+	banner
+	menu
+	}
+
+requirements(){
+
+	sudo apt update && sudo apt install ffmpeg wget	python-pip
+	sudo pip install youtube-dl
+	echo ""
+	echo "		Youtube-dl version `youtube-dl --version` succesfully installed"
+	echo ""
+	echo " 	PRESS ANY KEY TO CONTINUE"
+	read any
+	clear
+	start
+	}
+
+downonesong(){
+	echo " Introduce el link"
+	read link
+	echo $link
+	youtube-dl -x --embed-thumbnail --audio-format mp3 $link --exec 'mv {} music'
+	}
+
+downplaylist(){
+	echo " Introduce el link de la playlist"
+	read link
+	echo "$link"
+	youtube-dl -x -c -i -t --embed-thumbnail --audio-format mp3 --yes-playlist "$link" 
+
+}
+
+downprofile(){
+	echo " Introduce el link del profile"
+	read link
+	echo "$link"
+	youtube-dl -x -c -i -t --embed-thumbnail --audio-format mp3 "$link" 
+
+}
+
+
+downloadMusic(){
+	echo "		WHAT DO YOU WANT TO DO ? "
+	echo "	_____________________________________"
+	echo ""
+	echo "		1) Download one song"
+	echo ""
+	echo "		2) Download from playlist"
+	echo ""
+	echo "		3) Download from profile"
+	echo ""
+	echo "		4) Exit"
+	echo "	_____________________________________"
+	read ch2
+	echo "||"
+
+	case $ch2 in
+		1)downonesong;;
+		2)downplaylist;;
+		3)downprofile;;
+		4)exit 0;;
+		*) echo "INVALID OPTION"
+	esac
+	}
+
+i="0"
+while [	$i -lt	99 ]
+do
+	i=$[ $i + 1 ]
+
+	start
+	echo "I = $i"
+
+done
+
+
+
+
+
+
