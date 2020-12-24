@@ -23,7 +23,7 @@ banner () {
 	echo ""
 	echo "	  Y  O  U  T  U  B  E - D  L	  A  U  T  O  M  A  T  I  O  N	"	
 	echo ""
-	echo "		U N  I N F O R M A T I C O  D I G I T A L"
+	echo "			U N  I N F O R M A T I C O  D I G I T A L"
 	echo "  ________________________________________________________________________"
 
 }
@@ -239,6 +239,42 @@ bunchOfchannels(){
 			i=$((i+1))
 		done < $file
 	fi
+}
+
+bunchOfprofiles() {
+	echo "		Z) Volver al ménu"
+	echo "		FNAME)Introduce el nombre del fichero"
+	read file
+	if [ "$file" = "Z" ]
+	then 	
+		downloadMusic
+	else
+		
+		i=1
+		while read line; do
+			if [ $i -eq 1 ]
+			then	
+				coffee
+				echo "	-----------------------------------------------------"
+				echo "	Starting downloads from file."
+				echo "	Song No. $n "
+				echo "	URL:$line"
+				echo ""
+			else
+				echo "	-----------------------------------------------------"
+				echo "	Downloading from file."
+				echo "	Song No. $i "
+				echo "	URL:$line"
+				echo ""
+			fi
+			youtube-dl -x -c -i -t --embed-thumbnail --audio-format mp3 $line 
+			echo ""
+			echo "	Going to the next link !"
+			echo "	_____________________________________________________"
+			i=$((i+1))
+		done < $file
+
+	fi	
 }
 
 downloadMusic(){
